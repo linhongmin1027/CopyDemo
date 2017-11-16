@@ -15,10 +15,13 @@
 @property (nonatomic,assign)CGFloat close;
 @property (nonatomic,assign)NSInteger index;
 @property (nonatomic,strong)NSString * date;
-
+//27326175900
 @property (nonatomic,assign)CGFloat volume;
+//3170.4
 @property (nonatomic,assign)CGFloat ma5;
+//3146.79
 @property (nonatomic,assign)CGFloat ma10;
+//3407.85
 @property (nonatomic,assign)CGFloat ma20;
 @property (nonatomic,assign)CGFloat preClosePx;
 @property (nonatomic,strong)NSString * rate;
