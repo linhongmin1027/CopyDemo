@@ -93,7 +93,7 @@
     [self  setCurrentDataMaxAndMin];
     [self setNeedsDisplay];
 }
-#pragma mark 设置最大最小区间
+#pragma mark 设置最大最小值
 - (void)setCurrentDataMaxAndMin
 {
     
@@ -158,14 +158,14 @@
 }
 
 
-#pragma mark 绘制AVGmark
+#pragma mark 5/10/30日顶部数据绘制
 
 
 - (void)drawAvgMarker:(CGContextRef)context
                  idex:(NSInteger)idex
           isDrawRight:(BOOL)isDrawRight
 {
- 
+   
     if (!self.isShowAvgMarkerEnabled) {
         return;
     }
@@ -272,7 +272,7 @@
         }
         
         UIColor * color = self.dataSet.candleRiseColor;
-        if (open < close) {
+        if (open < close) {//红柱
             color = self.dataSet.candleFallColor;
             CGFloat hight = close-open < 1.0?1.0:close-open;
             [self drawRect:context rect:CGRectMake(left, open, candleWidth, hight) color:color];
@@ -287,7 +287,7 @@
             }
             [self drawRect:context rect:CGRectMake(left, open, candleWidth, 1.5) color:color];
             [self drawline:context startPoint:CGPointMake(startX, high) stopPoint:CGPointMake(startX, low) color:color lineWidth:self.dataSet.candleTopBottmLineWidth];
-        } else {
+        } else {//绿柱
             color = self.dataSet.candleRiseColor;
             CGFloat hight = open-close < 1.0?1.0:open-close;
             [self drawRect:context rect:CGRectMake(left, close, candleWidth, hight) color:color];
@@ -295,7 +295,7 @@
         }
         
        
-        
+        //均线绘制
         if (i > 0){
             YKLineEntity * lastEntity = [self.dataSet.data objectAtIndex:i -1];
             CGFloat lastX = startX - self.candleWidth;

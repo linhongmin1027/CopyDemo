@@ -45,7 +45,8 @@
     YKLineDataSet * dataset = [[YKLineDataSet alloc]init];
     dataset.data = array;
     dataset.highlightLineColor = [UIColor colorWithRed:60/255.0 green:76/255.0 blue:109/255.0 alpha:1.0];
-    dataset.highlightLineWidth = 0.7;
+    dataset.highlightLineWidth = 5;
+    
     dataset.candleRiseColor = [UIColor colorWithRed:233/255.0 green:47/255.0 blue:68/255.0 alpha:1.0];
     dataset.candleFallColor = [UIColor colorWithRed:33/255.0 green:179/255.0 blue:77/255.0 alpha:1.0];
     dataset.avgLineWidth = 1.f;
@@ -54,10 +55,10 @@
     dataset.avgMA20Color = [UIColor colorWithRed:216/255.0 green:192/255.0 blue:44/255.0 alpha:1.0];
     dataset.candleTopBottmLineWidth = 1;
     
-    [self.klineView setupChartOffsetWithLeft:50 top:10 right:10 bottom:10];
+    [self.klineView setupChartOffsetWithLeft:50 top:10 right:50 bottom:10];
     
     self.klineView.gridBackgroundColor = [UIColor whiteColor];
-    //self.klineView.borderColor = [UIColor colorWithRed:203/255.0 green:215/255.0 blue:224/255.0 alpha:1.0];
+    self.klineView.borderColor = [UIColor colorWithRed:203/255.0 green:215/255.0 blue:224/255.0 alpha:1.0];
     self.klineView.borderColor = [UIColor redColor];
     self.klineView.borderWidth = .5;
     self.klineView.candleWidth = 8;
@@ -69,6 +70,9 @@
     self.klineView.highlightLineShowEnabled = YES;
     self.klineView.zoomEnabled = YES;
     self.klineView.scrollEnabled = YES;
+    self.klineView.rightYAxisDrawEnabled=YES;
+    self.klineView.isShowAvgMarkerEnabled=YES;
+    
     [self.klineView setupData:dataset];
     
 }

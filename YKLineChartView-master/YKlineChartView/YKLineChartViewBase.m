@@ -1,4 +1,4 @@
-//
+ //
 //  YKLineChartViewBase.m
 //  YKLineChartView
 //
@@ -58,13 +58,15 @@
     [self drawline:context startPoint:CGPointMake(self.contentLeft,(self.uperChartHeightScale * self.contentHeight)/2.0 + self.contentTop) stopPoint:CGPointMake(self.contentRight, (self.uperChartHeightScale * self.contentHeight)/2.0 + self.contentTop) color:self.borderColor lineWidth:self.borderWidth/2.0];
     
 }
-#pragma mark 绘制价格
+#pragma mark 设置纵坐标
 - (void)drawLabelPrice:(CGContextRef)context
 {
     
     UIColor * labelBGColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     NSDictionary * drawAttributes = self.leftYAxisAttributedDic?:self.defaultAttributedDic;
     //@2016-5-12 by Liuk, 价格统一往左移2个像素，价格标签把图标的线遮挡了
+    //最高价
+  
     NSString * maxPriceStr = [self handleStrWithPrice:self.maxPrice];
     NSMutableAttributedString * maxPriceAttStr = [[NSMutableAttributedString alloc]initWithString:maxPriceStr attributes:drawAttributes];
     CGSize sizeMaxPriceAttStr = [maxPriceAttStr size];
@@ -72,6 +74,7 @@
     [self drawRect:context rect:maxPriceRect color:labelBGColor];
     [self drawLabel:context attributesText:maxPriceAttStr rect:maxPriceRect];
     
+    //中间价
     NSString * midPriceStr = [self handleStrWithPrice:(self.maxPrice+self.minPrice)/2.0];
     NSMutableAttributedString * midPriceAttStr = [[NSMutableAttributedString alloc]initWithString:midPriceStr attributes:drawAttributes];
     CGSize sizeMidPriceAttStr = [midPriceAttStr size];
@@ -79,19 +82,22 @@
     [self drawRect:context rect:midPriceRect color:labelBGColor];
     [self drawLabel:context attributesText:midPriceAttStr rect:midPriceRect];
     
+    //最低价
     NSString * minPriceStr = [self handleStrWithPrice:self.minPrice];
     NSMutableAttributedString * minPriceAttStr = [[NSMutableAttributedString alloc]initWithString:minPriceStr attributes:drawAttributes];
     CGSize sizeMinPriceAttStr = [minPriceAttStr size];
     CGRect minPriceRect = CGRectMake(self.contentLeft - (self.leftYAxisIsInChart?0:sizeMinPriceAttStr.width+2), ((self.uperChartHeightScale * self.contentHeight) + self.contentTop - sizeMinPriceAttStr.height ), sizeMinPriceAttStr.width, sizeMinPriceAttStr.height);
     [self drawRect:context rect:minPriceRect color:labelBGColor];
     [self drawLabel:context attributesText:minPriceAttStr rect:minPriceRect];
+   
     
+    //万手
     NSMutableAttributedString * zeroVolumeAttStr = [[NSMutableAttributedString alloc]initWithString:[self handleShowWithVolume:self.maxVolume] attributes:drawAttributes];
     CGSize zeroVolumeAttStrSize = [zeroVolumeAttStr size];
     CGRect zeroVolumeRect = CGRectMake(self.contentLeft - (self.leftYAxisIsInChart?0:zeroVolumeAttStrSize.width+2), self.contentBottom - zeroVolumeAttStrSize.height, zeroVolumeAttStrSize.width, zeroVolumeAttStrSize.height);
     [self drawRect:context rect:zeroVolumeRect color:labelBGColor];
     [self drawLabel:context attributesText:zeroVolumeAttStr rect:zeroVolumeRect];
-    
+    //手的数值
     NSString * maxVolumeStr = [self handleShowNumWithVolume:self.maxVolume];
     NSMutableAttributedString * maxVolumeAttStr = [[NSMutableAttributedString alloc]initWithString:maxVolumeStr attributes:drawAttributes];
     CGSize maxVolumeAttStrSize = [maxVolumeAttStr size];
@@ -101,13 +107,14 @@
     
     
     if (self.rightYAxisDrawEnabled) {
+        //最大涨幅
         NSString * maxRateStr = [self handleRateWithPrice:self.maxPrice originPX:(self.maxPrice+self.minPrice)/2.0];
         NSMutableAttributedString * maxRateAttStr = [[NSMutableAttributedString alloc]initWithString:maxRateStr attributes:drawAttributes];
         CGSize sizeMaxRateAttStr = [maxRateAttStr size];
         CGRect maxRateRect = CGRectMake(self.contentRight- (self.leftYAxisIsInChart?sizeMaxRateAttStr.width:0), self.contentTop, sizeMaxRateAttStr.width, sizeMaxRateAttStr.height);
         [self drawRect:context rect:maxRateRect color:labelBGColor];
         [self drawLabel:context attributesText:maxRateAttStr rect:maxRateRect];
-        
+        //最大跌幅
         NSString * minRateStr = [self handleRateWithPrice:self.minPrice originPX:(self.maxPrice+self.minPrice)/2.0];
         NSMutableAttributedString * minRateAttStr = [[NSMutableAttributedString alloc]initWithString:minRateStr attributes:drawAttributes];
         CGSize sizeMinRateAttStr = [minRateAttStr size];
@@ -115,6 +122,7 @@
         [self drawRect:context rect:minRateRect color:labelBGColor];
         [self drawLabel:context attributesText:minRateAttStr rect:minRateRect];
     }
+    
     
 }
 
